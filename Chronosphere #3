@@ -1,0 +1,22 @@
+function ChronosphereResumeConditions takes nothing returns boolean
+return GetUnitTypeId(GetDyingUnit()) == 'h00K'
+endfunction
+
+function GroupResMatching takes nothing returns boolean
+return GetFilterUnit() != udg_ChronosphereCaster and IsUnitType(GetFilterUnit(), UNIT_TYPE_MELEE_ATTACKER) != true
+endfunction
+
+function GroupResActions takes nothing returns nothing
+call PauseUnitBJ( false, GetEnumUnit() )
+call SetUnitTimeScalePercent( GetEnumUnit(), 100.00 )
+endfunction
+
+function ChronosphereResumeActions takes nothing returns nothing
+local location l = GetUnitLoc(GetDyingUnit())
+call RemoveUnit( GetDyingUnit() )
+set udg_ChronosphereGroup[2] = GetUnitsInRangeOfLocMatching(400.00, l, Condition(function GroupResMatching))
+call ForGroupBJ( udg_ChronosphereGroup[2], function GroupResActions )
+call RemoveLocation(l)
+set l = null
+endfunction
+
