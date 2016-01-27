@@ -1,0 +1,17 @@
+function ChronosphereConditions takes nothing returns boolean
+return GetSpellAbilityId() == 'A000'
+endfunction
+
+function ChronosphereActions takes nothing returns nothing
+local unit u
+local player p = GetOwningPlayer(GetSpellAbilityUnit())
+local real x = GetLocationX(GetSpellTargetLoc())
+local real y = GetLocationY(GetSpellTargetLoc())
+set udg_ChronosphereCaster = GetSpellAbilityUnit()
+set u = CreateUnit(p,'h00K',x,y,0.0)
+
+call UnitApplyTimedLife(u, 'BTLF', 8.00)
+call GroupAddUnit(udg_ChronosphereGroup[0], u)
+call EnableTrigger( gg_trg_ChronosphereLoop )
+set u = null
+endfunction
