@@ -1,0 +1,24 @@
+Chaosphere
+
+function ReleaseConditions takes nothing returns boolean
+return UnitHasItemOfTypeBJ(GetAttacker(), 'I00I') == true
+endfunction
+
+function RCD takes nothing returns nothing
+local unit e
+local unit u
+local player p = GetOwningPlayer(GetAttacker())
+local integer i = GetPlayerId(p) 1
+local location l = GetUnitLoc(GetAttacker())
+local real x = GetLocationX(l)
+local real y = GetLocationY(l)
+set u = CreateUnit(p,'h01K',x,y,0.0)
+call IssueImmediateOrder( u, "stomp" )
+call UnitApplyTimedLife(u,'Bhwd',3.0)
+set e = CreateUnit(p,'h05V',x,y,0.0)
+call UnitApplyTimedLife(e,'Bhwd',3.0)
+call RemoveLocation(l)
+set l = null
+set u = null
+set e = null
+endfunction
